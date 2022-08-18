@@ -1,0 +1,34 @@
+  <div *ngIf="isCameraExist; else noCameraExist">
+    <div style="text-align:center">
+      <webcam class="dimensao"[trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+      [switchCamera]="nextWebcamObservable" [mirrorImage]="'never'" (initError)="handleInitError($event)"></webcam>
+      <br />
+      <div class="d-grid gap-2 col-6 mx-auto" *ngIf="imageBase64">
+        <button type="button" class="btn btn-next d-flex align-items-center justify-content-center btn-orange"
+         (click)="sendPhoto()">Enviar foto</button>
+        <button type="button"
+         class="btn btn-next d-flex align-items-center justify-content-center btn-light"
+          (click)="anotherPicture()">Tirar outra foto</button>
+      </div>
+
+      <div class="d-grid gap-2 col-6 mx-auto"  *ngIf="!imageBase64">
+        <button type="button" class="btn btn-next d-flex align-items-center justify-content-center btn-orange"
+         (click)="takeSnapshot()">Tirar foto</button>
+        <button type="button" class="btn btn-next d-flex align-items-center justify-content-center btn-light"
+         (click)="changeWebCame(true)">Alternar de câmera</button>
+      </div>
+    </div>
+
+    <div *ngIf="errors.length > 0" class="card bg-danger">
+      <div class="card-body">
+        <h4 class="card-title">LISTA DE ERROS</h4>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let error of errors" class="list-group-item"> error </li>
+      </ul>
+    </div>
+  </div>
+
+  <ng-template #noCameraExist>
+    Camera device not available
+  </ng-template>
